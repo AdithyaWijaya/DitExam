@@ -1,5 +1,5 @@
 // Bypass Page Visibility API & Event blur & focus
-
+// Author : xDitt4GT++
 (function() {
     'use strict';
 
