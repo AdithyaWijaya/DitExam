@@ -5,7 +5,7 @@
 
 javascript:(function(){
   var API_BASE = 'https://api.cheatnetwork.eu';
-  var GAME_TYPE = 'quizizzzzz';
+  var GAME_TYPE = 'quizizz';
   
   function getAuthData() {
     var data = {
@@ -206,3 +206,4 @@ javascript:(function(){
   
   createGUI(null);
 })();
+
