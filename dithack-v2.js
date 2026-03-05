@@ -172,12 +172,12 @@
         btn.id = 'quizizz-hack-toggle';
         btn.textContent = '📝';
         
-        // Mobile-friendly button
+        // Mobile-friendly button - smaller size, bottom-left corner
         btn.style.cssText = `
             position: fixed;
-            bottom: ${isMobile ? '80px' : '20px'};
-            left: ${isMobile ? '20px' : '20px'};
-            padding: ${isMobile ? '16px 24px' : '12px 20px'};
+            bottom: 20px;
+            left: 20px;
+            padding: ${isMobile ? '10px 16px' : '12px 20px'};
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
@@ -187,11 +187,11 @@
             font-weight: bold;
             box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
             font-family: Inter, system-ui, sans-serif;
-            opacity: 0.9;
+            opacity: 0.1;
             transition: opacity 0.3s ease, transform 0.2s ease;
-            font-size: ${isMobile ? '24px' : '16px'};
-            min-width: ${isMobile ? '56px' : 'auto'};
-            min-height: ${isMobile ? '56px' : 'auto'};
+            font-size: ${isMobile ? '18px' : '16px'};
+            min-width: ${isMobile ? '40px' : 'auto'};
+            min-height: ${isMobile ? '40px' : 'auto'};
             display: flex;
             align-items: center;
             justify-content: center;
@@ -211,7 +211,7 @@
         };
         
         btn.onmouseleave = function() {
-            btn.style.opacity = '0.9';
+            btn.style.opacity = '0.1';
         };
         
         btn.onclick = function() {
