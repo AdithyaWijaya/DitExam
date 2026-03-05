@@ -16,18 +16,24 @@
     let cachedData = null;
     let isMinimized = false;
     
-    // Create floating frame
+// Create floating frame - mobile optimized
     function createFrame() {
         const container = document.createElement('div');
         container.id = 'quizizz-hack-frame';
+        
+        // Mobile detection
+        const isMobile = window.innerWidth <= 768;
+        
         Object.assign(container.style, {
             position: 'fixed',
-            top: '50px',
-            right: '50px',
-            width: '360px',
-            height: '500px',
+            top: isMobile ? '10px' : '50px',
+            right: isMobile ? '10px' : '50px',
+            left: isMobile ? '10px' : 'auto',
+            width: isMobile ? 'calc(100% - 20px)' : '360px',
+            maxHeight: isMobile ? '70vh' : '500px',
+            height: isMobile ? 'auto' : '500px',
             backgroundColor: '#fff',
-            borderRadius: '12px',
+            borderRadius: isMobile ? '8px' : '12px',
             border: '2px solid #4b4bfF',
             boxShadow: '0 6px 20px rgba(0,0,0,0.3)',
             zIndex: '999999',
@@ -37,35 +43,50 @@
             fontFamily: 'Inter, system-ui, sans-serif'
         });
         
-        // Header
+        // Header - mobile optimized
         const header = document.createElement('div');
         Object.assign(header.style, {
-            height: '44px',
+            height: isMobile ? '40px' : '44px',
             backgroundColor: '#4b4bfF',
             color: 'white',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            padding: '0 10px',
+            padding: isMobile ? '0 8px' : '0 10px',
             cursor: 'move',
-            userSelect: 'none'
+            userSelect: 'none',
+            flexShrink: '0'
         });
         
         const title = document.createElement('span');
         title.textContent = 'DitHack!';
+        title.style.fontSize = isMobile ? '14px' : '16px';
         header.appendChild(title);
         
         const controls = document.createElement('div');
+        controls.style.display = 'flex';
+        controls.style.gap = '8px';
         
-        // Minimize button
+        // Minimize button - larger for touch
         const minimizeBtn = document.createElement('span');
         minimizeBtn.textContent = '—';
-        minimizeBtn.style.cssText = 'cursor:pointer; margin-right:10px; font-weight:bold;';
+        minimizeBtn.style.cssText = `
+            cursor: pointer; 
+            font-weight: bold; 
+            font-size: ${isMobile ? '18px' : '14px'};
+            padding: 4px 8px;
+        `;
         
-        // Hide button  
+        // Hide button - larger for touch  
         const hideBtn = document.createElement('span');
-        hideBtn.textContent = 'Hide';
-        hideBtn.style.cssText = 'cursor:pointer; padding:5px 8px; background:#6565f7fF; border-radius:8px; font-size:12px;';
+        hideBtn.textContent = '✕';
+        hideBtn.style.cssText = `
+            cursor: pointer; 
+            padding: 6px 10px; 
+            background: rgba(255,255,255,0.2);
+            border-radius: 6px; 
+            font-size: ${isMobile ? '14px' : '12px'};
+        `;
         
         controls.appendChild(minimizeBtn);
         controls.appendChild(hideBtn);
@@ -77,8 +98,9 @@
         Object.assign(content.style, {
             flex: '1',
             overflowY: 'auto',
-            padding: '12px',
-            backgroundColor: '#f9fafb'
+            padding: isMobile ? '8px' : '12px',
+            backgroundColor: '#f9fafb',
+            minHeight: '200px'
         });
         
         // Search wrapper
@@ -90,17 +112,35 @@
             alignItems: 'center',
             width: '100%',
             backgroundColor: '#f9fafb',
-            marginBottom: '12px'
+            marginBottom: isMobile ? '8px' : '12px',
+            gap: '4px'
         });
         
         const searchBar = document.createElement('input');
         searchBar.type = 'text';
         searchBar.placeholder = 'Cari soal...';
-        searchBar.style.cssText = 'flex:1; padding:8px 10px; border-radius:8px 0 0 8px; border:1px solid #ccc; border-right:none; font-size:14px;';
+        searchBar.style.cssText = `
+            flex: 1; 
+            padding: 10px 12px; 
+            border-radius: 8px 0 0 8px; 
+            border: 1px solid #ccc; 
+            border-right: none; 
+            font-size: ${isMobile ? '16px' : '14px'};
+            min-height: 40px;
+        `;
         
         const clearBtn = document.createElement('button');
         clearBtn.textContent = '✕';
-        clearBtn.style.cssText = 'padding:8px 12px; background:#e5e7eb; border:1px solid #ccc; border-left:none; border-radius:0 8px 8px 0; cursor:pointer;';
+        clearBtn.style.cssText = `
+            padding: 10px 14px; 
+            background: #e5e7eb; 
+            border: 1px solid #ccc; 
+            border-left: none; 
+            border-radius: 0 8px 8px 0; 
+            cursor: pointer;
+            min-width: 40px;
+            min-height: 40px;
+        `;
         
         searchWrap.appendChild(searchBar);
         searchWrap.appendChild(clearBtn);
@@ -108,7 +148,11 @@
         // Results container
         const resultsWrap = document.createElement('div');
         resultsWrap.id = 'quizizz-results';
-        resultsWrap.style.cssText = 'display:flex; flex-direction:column; gap:8px;';
+        resultsWrap.style.cssText = `
+            display: flex; 
+            flex-direction: column; 
+            gap: ${isMobile ? '6px' : '8px'};
+        `;
         
         content.appendChild(searchWrap);
         content.appendChild(resultsWrap);
@@ -120,36 +164,54 @@
         return { container, header, content, searchBar, clearBtn, resultsWrap, minimizeBtn, hideBtn };
     }
     
-    // Create toggle button (to show frame after hiding)
+    // Create toggle button - mobile optimized
     function createToggleButton() {
+        const isMobile = window.innerWidth <= 768;
+        
         const btn = document.createElement('button');
         btn.id = 'quizizz-hack-toggle';
-        btn.textContent = '📝 DitHack!';
+        btn.textContent = '📝';
+        
+        // Mobile-friendly button
         btn.style.cssText = `
             position: fixed;
-            bottom: 20px;
-            left: 20px;
-            padding: 12px 20px;
+            bottom: ${isMobile ? '80px' : '20px'};
+            left: ${isMobile ? '20px' : '20px'};
+            padding: ${isMobile ? '16px 24px' : '12px 20px'};
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            border-radius: 25px;
+            border-radius: 50px;
             cursor: pointer;
             z-index: 999998;
             font-weight: bold;
             box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
             font-family: Inter, system-ui, sans-serif;
-            opacity: 0.1;
-            transition: opacity 0.3s ease;
+            opacity: 0.9;
+            transition: opacity 0.3s ease, transform 0.2s ease;
+            font-size: ${isMobile ? '24px' : '16px'};
+            min-width: ${isMobile ? '56px' : 'auto'};
+            min-height: ${isMobile ? '56px' : 'auto'};
+            display: flex;
+            align-items: center;
+            justify-content: center;
         `;
         
-        // Add hover effect
+        // Touch feedback
+        btn.addEventListener('touchstart', function() {
+            btn.style.transform = 'scale(0.95)';
+        });
+        
+        btn.addEventListener('touchend', function() {
+            btn.style.transform = 'scale(1)';
+        });
+        
         btn.onmouseenter = function() {
             btn.style.opacity = '1';
         };
         
         btn.onmouseleave = function() {
-            btn.style.opacity = '0.1';
+            btn.style.opacity = '0.9';
         };
         
         btn.onclick = function() {
@@ -473,16 +535,18 @@
             }
         });
         
-        // Minimize functionality
+        // Minimize functionality - mobile optimized
         minimizeBtn.onclick = function() {
             isMinimized = !isMinimized;
+            const isMobile = window.innerWidth <= 768;
             if (isMinimized) {
                 content.style.display = 'none';
-                container.style.height = '40px';
+                container.style.height = isMobile ? '36px' : '40px';
                 minimizeBtn.textContent = '□';
             } else {
                 content.style.display = 'block';
-                container.style.height = '500px';
+                container.style.height = isMobile ? 'auto' : '500px';
+                container.style.maxHeight = isMobile ? '70vh' : '500px';
                 minimizeBtn.textContent = '—';
             }
         };
@@ -545,5 +609,5 @@
     // Run initialization
     init();
     
-    console.log('✅ Quizizz Answer Viewer loaded!');
+    console.log('✅ DitHack loaded!');
 })();
