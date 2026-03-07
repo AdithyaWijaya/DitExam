@@ -809,7 +809,7 @@
             gameTypeSelector.style.cssText = 'display:flex; gap:8px; margin-bottom:12px; justify-content:center;';
             
             const quizizzBtn = document.createElement('button');
-            quizizzBtn.textContent = '📝 Quizizz';
+            quizizzBtn.textContent = '📝 Wayground';
             quizizzBtn.dataset.type = 'quizizz';
             quizizzBtn.style.cssText = 'flex:1; padding:10px; background:#4b4bfF; color:white; border:none; border-radius:8px; cursor:pointer; font-size:14px; font-weight:bold;';
             
@@ -829,14 +829,14 @@
                     quizizzBtn.style.color = 'white';
                     kahootBtn.style.background = '#ccc';
                     kahootBtn.style.color = '#333';
-                    pinInput.placeholder = 'Masukkan Kode Quizizz';
+                    pinInput.placeholder = 'Kode Game Wayground';
                     container.style.borderColor = '#4b4bfF';
                 } else {
                     kahootBtn.style.background = '#ff6b35';
                     kahootBtn.style.color = 'white';
                     quizizzBtn.style.background = '#ccc';
                     quizizzBtn.style.color = '#333';
-                    pinInput.placeholder = 'Masukkan Link/Kode Kahoot';
+                    pinInput.placeholder = 'QuizID Kahoot';
                     container.style.borderColor = '#ff6b35';
                 }
             }
