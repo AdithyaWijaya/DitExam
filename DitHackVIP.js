@@ -612,7 +612,7 @@
         const pinInput = document.createElement('input');
         pinInput.type = 'text';
         pinInput.id = 'quizizz-pin-input';
-        pinInput.placeholder = 'Masukkan Kode Quizizz';
+        pinInput.placeholder = 'Kode Game Wayground';
         pinInput.style.cssText = 'width:80%; padding:10px; border:1px solid #ccc; border-radius:8px; margin-bottom:10px; font-size:14px;';
         
         const fetchBtn = document.createElement('button');
