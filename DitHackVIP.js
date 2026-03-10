@@ -11,7 +11,7 @@
 
     // License configuration
     const LICENSE_CONFIG = {
-        licenseFile: 'https://adithyawijaya.github.io/DitHack-Script/xditt4gt.json'
+        licenseFile: 'https://dithackvip.vercel.app/xditt4gt.json'
     };
 
     // Validate license against JSON file
@@ -141,7 +141,7 @@
         submitBtn.onclick = async () => {
             const code = input.value.trim();
             if (!code) {
-                message.textContent = 'Masukkan kode Token terlebih dahulu!';
+                message.textContent = 'Masukkan Token terlebih dahulu!';
                 message.style.color = '#ff6b6b';
                 return;
             }
@@ -1049,4 +1049,3 @@
 
     console.log('✅ DitHack loaded!');
 })();
-
