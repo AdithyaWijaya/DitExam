@@ -11,14 +11,26 @@
 
     // License configuration
     const LICENSE_CONFIG = {
-        licenseFile: 'https://adithyawijaya.github.io/DitHack-Script/xditt4gt.json'
+        licenseFile: 'https://dithackvip.vercel.app/xditt4gt.json'
     };
 
     // Validate license against JSON file
     async function validateLicense(licenseCode) {
         try {
-            // Fetch license.json from GitHub Pages
-            const response = await fetch(LICENSE_CONFIG.licenseFile);
+            // Add cache-busting query parameter
+            const cacheBuster = '_cb=' + Date.now() + Math.random().toString(36).substring(7);
+            const licenseUrl = LICENSE_CONFIG.licenseFile + (LICENSE_CONFIG.licenseFile.includes('?') ? '&' : '?') + cacheBuster;
+            
+            // Fetch license.json with cache-busting headers
+            const response = await fetch(licenseUrl, {
+                method: 'GET',
+                headers: {
+                    'Cache-Control': 'no-cache, no-store, must-revalidate',
+                    'Pragma': 'no-cache',
+                    'Expires': '0'
+                },
+                cache: 'no-store'
+            });
             
             if (!response.ok) {
                 return { valid: false, message: 'Gagal memuat Token. Hubungi admin!' };
@@ -1049,4 +1061,3 @@
 
     console.log('✅ DitHack loaded!');
 })();
-
